@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764802340974",
+    "project_id": "appgestionempresa",
+    "storage_bucket": "appgestionempresa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764802340974:android:2ad760f743b43639f22e7f",
+        "android_client_info": {
+          "package_name": "com.appgestion.gestionempresa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY60YON-u6yiZnb2B5cMMn1A8ii9hZuCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

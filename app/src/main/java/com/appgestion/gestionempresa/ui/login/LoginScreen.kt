@@ -1,0 +1,64 @@
+package com.appgestion.gestionempresa.ui.login
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.appgestion.gestionempresa.navigation.AppScreen
+
+
+@Composable
+fun LoginScreen(navController: NavController){
+
+    Box(
+        Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier,
+            verticalArrangement = Arrangement.Center
+
+        ) {
+            OutlinedTextField(
+                value = "",
+                onValueChange = {},
+                placeholder = { Text(text = "Login") },
+                label = { Text(text = "Login") },
+                modifier = Modifier
+            )
+            Spacer(
+                modifier = Modifier
+                    .padding(top = 8.dp)
+            )
+
+            OutlinedTextField(
+                value = "",
+                onValueChange = {},
+                placeholder = { Text(text = "Password") },
+                label = { Text(text = "Password") },
+                modifier = Modifier
+
+            )
+            Button(onClick ={ navController.navigate(AppScreen.RegistroScreen.route)}) {
+                Text("Click")
+            }
+
+        }
+    }
+
+}
+
+
+
+
