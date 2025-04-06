@@ -28,7 +28,7 @@ Aplicación Android desarrollada en **Kotlin** con **Jetpack Compose**, que perm
 
   /app └── ui/ ├── login/ ├── register/ └── navigation/ └── viewmodel/ └── repository/
 
-## 👨‍💻 Autor
+##  Autor
 
 **Rubén Pérez**  
-Estudiante de Desarrollador Aplicaciones Multiplataforma – TFG 2024-2025
+Estudiante de Desarrollador Aplicaciones Multiplataforma – PI 2024-2025
