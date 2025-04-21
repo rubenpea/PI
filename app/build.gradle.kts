@@ -3,11 +3,14 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
     //conexiones firebase
-
     id("com.google.gms.google-services")
 
     //compose
     id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+
+    //dagger Hilt
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -54,7 +57,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
+
 
 dependencies {
 
@@ -68,6 +75,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.common.ktx)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,7 +85,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-//imoprt the BoM para FireBase Plataforma
+    //imoprt the BoM para FireBase Plataforma
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
 
 
@@ -86,4 +95,13 @@ dependencies {
 
     //navegacion
     implementation("androidx.navigation:navigation-compose:2.8.0")
+
+    //dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    //coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
+
 }
