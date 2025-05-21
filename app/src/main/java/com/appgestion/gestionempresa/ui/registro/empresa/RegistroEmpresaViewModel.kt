@@ -1,53 +1,61 @@
 package com.appgestion.gestionempresa.ui.registro.empresa
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistroEmpresaViewModel @Inject constructor(
-  private  val authRepository: AuthRepository
-): ViewModel() {
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegistroEmpresaState())
     val uiState: StateFlow<RegistroEmpresaState> = _uiState
 
+    private val _registrerUser = MutableStateFlow(false)
+    val registerUser: StateFlow<Boolean> = _registrerUser
 
-    fun changeEmail(newEmail:String){
+
+    fun changeEmail(newEmail: String) {
         _uiState.value = _uiState.value.copy(
             email = newEmail,
             emailError = null
         )
     }
 
-    fun changePass(newPass:String){
+    fun changePass(newPass: String) {
         _uiState.update { current ->
             current.copy(
                 password = newPass,
                 passwordError = null,
 
-            )
+                )
 
         }
     }
 
 
-    fun changePassConfirm(newPass:String){
+    fun changePassConfirm(newPass: String) {
         _uiState.value = _uiState.value.copy(
             passwordConfirm = newPass
         )
     }
-    fun changeName(newName:String){
+
+    fun changeName(newName: String) {
         _uiState.value = _uiState.value.copy(
             name = newName,
             nameError = null
         )
     }
-    fun changePhone(newPhone:String){
+
+    fun changePhone(newPhone: String) {
         _uiState.value = _uiState.value.copy(
             phone = newPhone,
             phoneError = null
@@ -62,10 +70,12 @@ class RegistroEmpresaViewModel @Inject constructor(
         // Calculamos el error para cada campo de forma local
         val emailError = if (currentState.email.isBlank()) "Campo obligatorio" else null
         val passwordError = if (currentState.password.isBlank()) "Campo obligatorio" else null
-        val passwordConfirmError = if (currentState.passwordConfirm.isBlank()) "Campo obligatorio" else null
+        val passwordConfirmError =
+            if (currentState.passwordConfirm.isBlank()) "Campo obligatorio" else null
         val nombreError = if (currentState.name.isBlank()) "Campo obligatorio" else null
         val phoneError = if (currentState.phone.isBlank()) "Campo obligatorio" else null
-        val passDiffError = if(uiState.value.password != uiState.value.passwordConfirm) "Contraseñas Diferentes" else null
+        val passDiffError =
+            if (uiState.value.password != uiState.value.passwordConfirm) "Contraseñas Diferentes" else null
 
         // Actualizamos el estado del ViewModel una sola vez con todos los errores calculados
         _uiState.update {
@@ -80,8 +90,37 @@ class RegistroEmpresaViewModel @Inject constructor(
         }
 
         // La validación es exitosa si ninguno de los errores tiene valor (es decir, todos son null)
-        return listOf(emailError, passwordError, passwordConfirmError, nombreError, phoneError, passDiffError)
+        return listOf(
+            emailError,
+            passwordError,
+            passwordConfirmError,
+            nombreError,
+            phoneError,
+            passDiffError
+        )
             .all { it == null }
     }
 
+    fun registrarEmpresa() {
+        val st = uiState.value
+        val tipe = "empresa"
+        viewModelScope.launch {
+            when (authRepository.registerUser(
+                st.email,
+                st.password,
+                tipe,
+                st.name,
+                st.phone
+            )) {
+                is Response.Success -> {
+                    _registrerUser.value = true
+                }
+
+                is Response.Failure -> {
+                }
+
+            }
+        }
+    }
 }
+

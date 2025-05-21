@@ -1,5 +1,7 @@
 package com.appgestion.gestionempresa.ui.registro.trabajador
 
+import com.appgestion.gestionempresa.data.model.Response
+
 data class RegistroTrabajadorState (
 
     val name: String = "",

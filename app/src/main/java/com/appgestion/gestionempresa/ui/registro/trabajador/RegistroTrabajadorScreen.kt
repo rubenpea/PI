@@ -1,5 +1,6 @@
 package com.appgestion.gestionempresa.ui.registro.trabajador
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -30,6 +32,17 @@ fun RegistroTrabajadorScreen(
 ) {
 
     val state by viewModel.uiState.collectAsState()
+    val success by viewModel.registroSuccess.collectAsState()
+
+    LaunchedEffect(success) {
+        if (success) {
+            Log.d("RegistroUI", "Entró al LaunchedEffect con success=$success")
+            navController.navigate(AppScreen.HomeTrabajador.route) {
+                popUpTo(AppScreen.LoginScreen.route) { inclusive = true }
+            }
+            viewModel.resetSuccess()
+        }
+    }
 
     Box(
         Modifier.fillMaxSize(),
@@ -167,13 +180,13 @@ fun RegistroTrabajadorScreen(
                     onClick = {
                         if (viewModel.validar()) {
                             viewModel.registrarTrabajador()
-                            navController.navigate(AppScreen.HomeTrabajador.route)
                         }
                     }
                 ) {
                     Text(text = "Registrarse")
                 }
             }
+
         }
     }
 

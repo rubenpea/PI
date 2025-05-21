@@ -12,18 +12,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.appgestion.gestionempresa.navigation.AppScreen
 
 
 @Composable
 fun RegistroEmpresaScreen(navController: NavController, viewModel: RegistroEmpresaViewModel) {
 
     val state by viewModel.uiState.collectAsState()
+    val success by viewModel.registerUser.collectAsState()
+
+    LaunchedEffect(success) {
+        if(success){
+            navController.navigate(AppScreen.HomeEmpresa.route)
+        }
+    }
 
     Box(
         Modifier.fillMaxSize(),
@@ -158,7 +167,11 @@ fun RegistroEmpresaScreen(navController: NavController, viewModel: RegistroEmpre
             }
             Row() {
                 Button(
-                    onClick = { viewModel.validar() }
+                    onClick = {
+                        if(viewModel.validar()){
+                            viewModel.registrarEmpresa()
+                        }
+                    }
                 ) {
                     Text(text = "Registrarse")
                 }

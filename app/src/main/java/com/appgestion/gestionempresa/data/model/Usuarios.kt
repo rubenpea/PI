@@ -6,5 +6,6 @@ data class Usuarios (
     val tipo: String = "",
     val name: String = "",
     val phone: String = "",
+    val password: String = ""
 
 )

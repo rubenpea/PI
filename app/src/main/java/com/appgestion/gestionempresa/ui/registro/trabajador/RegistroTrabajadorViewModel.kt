@@ -1,5 +1,7 @@
 package com.appgestion.gestionempresa.ui.registro.trabajador
 
+import android.util.Log
+import androidx.compose.material3.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -21,6 +23,9 @@ class RegistroTrabajadorViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(RegistroTrabajadorState())
     val uiState: StateFlow<RegistroTrabajadorState> = _uiState
+
+    private val _registroSuccess = MutableStateFlow(false)
+    val registroSuccess: StateFlow<Boolean> = _registroSuccess
 
 
     fun changeEmail(newEmail:String){
@@ -99,21 +104,25 @@ class RegistroTrabajadorViewModel @Inject constructor(
     }
 
      fun registrarTrabajador() {
-        val email = uiState.value.email
-        val password = uiState.value.password
+         viewModelScope.launch {
+        val st = uiState.value
         val tipe = "trabajador"
 
-        viewModelScope.launch {
-          val result = authRepository.registerUser(email, password, tipe)
-
-            when(result){
+            when(authRepository.registerUser(st.email, st.password, tipe, st.name, st.phone)){
                 is Response.Success -> {
+                    _registroSuccess.value = true
+                    Log.d("Registro", "Registro en succes Registro ")
 
                 }
                 is Response.Failure -> {
+                    Log.d("Registro", "Fallo Registro ")
 
                 }
             }
         }
+    }
+
+    fun resetSuccess() {
+        _registroSuccess.value = false
     }
 }

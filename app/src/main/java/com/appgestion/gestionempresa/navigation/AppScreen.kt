@@ -8,4 +8,5 @@ sealed class AppScreen(val route: String) {
     object RegistroTrabajadorScreen: AppScreen("registro_trabajador_screen")
     object RecupararScreen: AppScreen("recuperar_screen")
     object HomeTrabajador: AppScreen("hom_trabajador")
+    object HomeEmpresa: AppScreen("hom_empresa")
 }
