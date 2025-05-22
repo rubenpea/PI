@@ -1,15 +1,61 @@
-*.iml
-.gradle
+# =====================
+# IDE y archivos de configuración
+# =====================
+
+# IntelliJ / Android Studio
+/.idea/
+/.idea/*         
+                       # ignora todo .idea…
+!/.idea/codeStyles/ 
+                    # …pero permite estilos de código si los compartes
+!/.idea/inspectionProfiles/          
+   # …y perfiles de inspección
+
+# Ficheros de proyecto Eclipse (por si acaso)
+/*.iml
+/.classpath
+/.project
+/.settings/
+
+# =====================
+# Build outputs y artefactos
+# =====================
+
+# Carpetas de build
+/build/
+/app/build/
+
+# APK, AAR y bundles
+*.apk
+*.aar
+*.apks
+*.aab
+
+# Binarios nativos y capturas
+.cxx/
+/.externalNativeBuild/
+/captures/
+
+# Logs y bases de datos temporales
+*.log
+*.db
+*.hprof
+
+# =====================
+# Gradle wrapper y caches de proyecto
+# =====================
+
+# Gradle wrapper scripts
+/gradlew
+/gradlew.bat
+/gradle/
+
+# Cache interna del proyecto (se regenerará en cada máquina)
+/.gradle/
+
+# =====================
+# Archivos de configuración local
+# =====================
+
+# Propiedades de SDK local (nunca subir)
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
