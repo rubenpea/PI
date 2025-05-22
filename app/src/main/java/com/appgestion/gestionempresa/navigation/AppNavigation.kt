@@ -2,20 +2,16 @@ package com.appgestion.gestionempresa.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.appgestion.gestionempresa.ui.login.LoginScreen
 import androidx.navigation.compose.composable
-import com.appgestion.gestionempresa.ui.login.LoginViewModel
 import com.appgestion.gestionempresa.ui.perfiles.empresa.HomeScreenEmpresa
-import com.appgestion.gestionempresa.ui.perfiles.trabajador.HomeScreen
+import com.appgestion.gestionempresa.ui.perfiles.trabajador.HomeScreenTrabajador
 import com.appgestion.gestionempresa.ui.recuperarpass.RecuperarScreen
 import com.appgestion.gestionempresa.ui.registro.ElegirRegistro
 import com.appgestion.gestionempresa.ui.registro.empresa.RegistroEmpresaScreen
-import com.appgestion.gestionempresa.ui.registro.empresa.RegistroEmpresaViewModel
 import com.appgestion.gestionempresa.ui.registro.trabajador.RegistroTrabajadorScreen
-import com.appgestion.gestionempresa.ui.registro.trabajador.RegistroTrabajadorViewModel
 
 
 @Composable
@@ -39,11 +35,11 @@ fun AppNavigation(){
         composable(route = AppScreen.RecupararScreen.route){
             RecuperarScreen( viewModel = hiltViewModel())
         }
-        composable(route = AppScreen.HomeTrabajador.route){
-            HomeScreen()
-        }
         composable(route = AppScreen.HomeEmpresa.route){
             HomeScreenEmpresa()
+        }
+        composable(route = AppScreen.HomeTrabajador.route){
+            HomeScreenTrabajador()
         }
     }
 

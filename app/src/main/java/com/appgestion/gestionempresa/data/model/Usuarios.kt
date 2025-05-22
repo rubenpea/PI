@@ -7,5 +7,4 @@ data class Usuarios (
     val name: String = "",
     val phone: String = "",
     val password: String = ""
-
 )

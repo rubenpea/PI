@@ -1,6 +1,7 @@
 package com.appgestion.gestionempresa.domain.repository
 
 import com.appgestion.gestionempresa.data.model.Response
+import com.appgestion.gestionempresa.data.model.Usuarios
 
 interface AuthRepository {
 
@@ -15,9 +16,15 @@ interface AuthRepository {
   suspend fun loginUser(
     email: String,
     password: String
-  ): Response<Boolean>
+  ): Response<String>
+
+  suspend fun fetchUser(uid: String):Response<Usuarios>
+
+
 
   suspend fun recuperarPassword(
     email: String
   )
+
+
 }

@@ -33,9 +33,16 @@ fun LoginScreen(
 
     val success by viewModel.loginUser.collectAsState()
 
-    LaunchedEffect(success) {
-        if(success){
-            navController.navigate(AppScreen.HomeEmpresa.route)
+    val user  by viewModel.user.collectAsState(initial = null)
+    LaunchedEffect(user) {
+        user?.let {
+            val ruta = if (it.tipo == "empresa")
+                AppScreen.HomeEmpresa.route
+            else
+                AppScreen.HomeTrabajador.route
+            navController.navigate(ruta) {
+                popUpTo(AppScreen.LoginScreen.route) { inclusive = true }
+            }
         }
     }
 
