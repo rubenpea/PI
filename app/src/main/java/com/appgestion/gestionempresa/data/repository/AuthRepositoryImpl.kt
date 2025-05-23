@@ -46,7 +46,7 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun loginUser(email: String, password: String): Response<String> {
+    override suspend fun loginUser(email: String, password: String): Response<Usuarios> {
 
         return try {
             val result = auth.signInWithEmailAndPassword(email, password).await()
@@ -54,9 +54,19 @@ class AuthRepositoryImpl @Inject constructor(
             val userUid = result.user?.uid
                 ?: return Response.Failure(Exception("uid no encontrado"))
 
+            val snap = firestore.collection("usuarios").document(userUid).get().await()
+
+            if(!snap.exists()){
+                return Response.Failure(Exception("Usuario no encontrado"))
+            }
+
+            val user = snap.toObject(Usuarios::class.java)
+                ?: return Response.Failure(Exception("Fallo al cargar usuario"))
+
+
             Log.d("AUTHRepo", "Usuario logueado: $userUid")
 
-            Response.Success(userUid)
+            Response.Success(user)
         }catch (e: Exception){
             Log.w("AuthRepo", "loginUser: failure", e)
             Response.Failure(e)
@@ -65,24 +75,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun fetchUser(uid: String): Response<Usuarios> {
-        return try {
-            val usuarios = firestore.collection("usuarios").document(uid).get().await()
-            if(!usuarios.exists()){
-                return Response.Failure(Exception("Usuario no encontrado"))
-            }
-
-            val user = usuarios.toObject(Usuarios::class.java)
-                ?: return Response.Failure(Exception("Fallo al cargar usuario"))
-
-            Response.Success(user)
-
-        }catch (e: Exception){
-            Response.Failure(e)
-        }
-
-
-    }
 
     override suspend fun recuperarPassword(email: String) {
         TODO("Not yet implemented")

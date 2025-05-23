@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.appgestion.gestionempresa.ui.login.LoginScreen
 import androidx.navigation.compose.composable
-import com.appgestion.gestionempresa.ui.perfiles.empresa.HomeScreenEmpresa
+import com.appgestion.gestionempresa.ui.perfiles.empresa.HomeEmpresaScreen
 import com.appgestion.gestionempresa.ui.perfiles.trabajador.HomeScreenTrabajador
 import com.appgestion.gestionempresa.ui.recuperarpass.RecuperarScreen
 import com.appgestion.gestionempresa.ui.registro.ElegirRegistro
@@ -36,7 +36,7 @@ fun AppNavigation(){
             RecuperarScreen( viewModel = hiltViewModel())
         }
         composable(route = AppScreen.HomeEmpresa.route){
-            HomeScreenEmpresa()
+            HomeEmpresaScreen(navController)
         }
         composable(route = AppScreen.HomeTrabajador.route){
             HomeScreenTrabajador()

@@ -16,10 +16,7 @@ interface AuthRepository {
   suspend fun loginUser(
     email: String,
     password: String
-  ): Response<String>
-
-  suspend fun fetchUser(uid: String):Response<Usuarios>
-
+  ): Response<Usuarios>
 
 
   suspend fun recuperarPassword(

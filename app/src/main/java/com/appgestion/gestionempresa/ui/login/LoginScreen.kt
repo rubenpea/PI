@@ -31,7 +31,7 @@ fun LoginScreen(
 
     val state by viewModel.uiState.collectAsState()
 
-    val success by viewModel.loginUser.collectAsState()
+    val error by viewModel.error.collectAsState()
 
     val user  by viewModel.user.collectAsState(initial = null)
     LaunchedEffect(user) {

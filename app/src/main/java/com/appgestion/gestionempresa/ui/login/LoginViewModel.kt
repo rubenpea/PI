@@ -19,9 +19,6 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState
 
-    private val _loginUser = MutableStateFlow(false)
-    val loginUser: StateFlow<Boolean> = _loginUser
-
     private val _user = MutableStateFlow<Usuarios?>(null)
     val user: StateFlow<Usuarios?> = _user
 
@@ -50,27 +47,17 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             // 2) Primera llamada: obtenemos el UID
             when (val loginResp = authRepository.loginUser(email, password)) {
-                is Response.Failure -> {
-                    _error.value = loginResp.exception.message
-                }
-
                 is Response.Success -> {
-                    val uid = loginResp.data   // aquí tienes el String con el UID
-
-                    // 3) Segunda llamada: con el UID pedimos el objeto Usuarios
-                    when (val fetchResp = authRepository.fetchUser(uid)) {
-                        is Response.Failure -> {
-                            _error.value = fetchResp.exception.message
-                        }
-
-                        is Response.Success -> {
-                            _user.value =
-                                fetchResp.data  // aquí ya tienes Usuarios con .tipo, .name, etc.
-                        }
+                    _user.value = loginResp.data   // aquí tienes el String con el UID
+                }
+                    is Response.Failure -> {
+                        _error.value = loginResp.exception.message
                     }
                 }
             }
         }
     }
-}
+
+
+
 
