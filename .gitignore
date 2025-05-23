@@ -48,7 +48,7 @@
 # Gradle wrapper scripts
 /gradlew
 /gradlew.bat
-/gradle/
+
 
 # Cache interna del proyecto (se regenerará en cada máquina)
 /.gradle/
