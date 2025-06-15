@@ -60,6 +60,7 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
 }
 
 
@@ -77,6 +78,11 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.room.runtime.android)
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.animation.core.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -104,4 +110,13 @@ dependencies {
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
 
+
+    implementation("io.coil-kt:coil-compose:2.2.2")
+
+    implementation("androidx.compose.material:material-icons-extended:<tu-versión-compose>")
+    implementation ("androidx.compose.material3:material3:1.1.0")
+
+    implementation ("androidx.compose.foundation:foundation:1.4.0")
+
+    implementation ("androidx.compose.foundation:foundation-layout:1.4.3")
 }

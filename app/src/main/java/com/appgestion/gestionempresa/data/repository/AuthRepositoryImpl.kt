@@ -1,13 +1,13 @@
 package com.appgestion.gestionempresa.data.repository
 
-import android.util.Log
 import com.appgestion.gestionempresa.data.model.Response
-import com.appgestion.gestionempresa.data.model.Usuarios
+import com.appgestion.gestionempresa.data.model.UsuarioDto
+import com.appgestion.gestionempresa.data.model.toDomain
+import com.appgestion.gestionempresa.data.model.toDto
+import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -16,44 +16,43 @@ class AuthRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : AuthRepository {
 
-    override suspend fun registerUser(
-        email: String,
-        password: String,
-        tipe: String,
-        name: String,
-        phone: String
-    ): Response<Boolean> {
-
+    override suspend fun registerUser(usuario: UsuarioEntity, password: String): Response<Boolean> {
         return try {
+            val result = auth.createUserWithEmailAndPassword(usuario.email, password).await()
+            val userUid = result.user?.uid
+                ?: return Response.Failure(Exception("UID no encontrado al crear usuario"))
 
-            val result = auth.createUserWithEmailAndPassword(email, password).await()
-            Log.d("AuthRepo", "Usuario creado: ${result.user?.uid}")
-            val userUid =
-                result?.user?.uid ?: return Response.Failure(Exception("Uid no encontrado"))
+            val usuarioConId = usuario.copy(id = userUid)
+            val dto = usuarioConId.toDto(passwordEnTexto = "")
 
-            var usuario = Usuarios(
-                uid = userUid,
-                email = email,
-                tipo = tipe
-            )
-            if(name.isNotBlank()) usuario = usuario.copy(name = name)
-            if(phone.isNotBlank()) usuario = usuario.copy(phone = phone)
+            firestore
+                .collection("usuarios")
+                .document(userUid)
+                .set(dto)
+                .await()
 
-            firestore.collection("usuarios").document(userUid).set(usuario).await()
-            return Response.Success(true)
+            Response.Success(true)
         } catch (e: Exception) {
-            return Response.Failure(e)
+            Response.Failure(e)
         }
     }
 
+<<<<<<< HEAD
     override suspend fun loginUser(email: String, password: String): Response<Usuarios> {
 
+=======
+    override suspend fun loginUser(email: String, password: String): Response<UsuarioEntity> {
+>>>>>>> c40b17f (Proyecto Entrega)
         return try {
             val result = auth.signInWithEmailAndPassword(email, password).await()
+            val uid = result.user?.uid
+                ?: return Response.Failure(Exception("UID no encontrado al iniciar sesión"))
 
-            val userUid = result.user?.uid
-                ?: return Response.Failure(Exception("uid no encontrado"))
+            val snapshot = firestore.collection("usuarios").document(uid).get().await()
+            val dto = snapshot.toObject(UsuarioDto::class.java)
+                ?: return Response.Failure(Exception("Usuario no encontrado en Firestore"))
 
+<<<<<<< HEAD
             val snap = firestore.collection("usuarios").document(userUid).get().await()
 
             if(!snap.exists()){
@@ -69,15 +68,37 @@ class AuthRepositoryImpl @Inject constructor(
             Response.Success(user)
         }catch (e: Exception){
             Log.w("AuthRepo", "loginUser: failure", e)
+=======
+            val usuarioDom = dto.toDomain()
+            Response.Success(usuarioDom)
+        } catch (e: Exception) {
+>>>>>>> c40b17f (Proyecto Entrega)
             Response.Failure(e)
         }
-
-
     }
 
+<<<<<<< HEAD
+=======
 
-    override suspend fun recuperarPassword(email: String) {
+    override suspend fun fetchUser(uid: String): Response<UsuarioEntity> {
+        return try {
+            val snapshot = firestore.collection("usuarios").document(uid).get().await()
+            val dto = snapshot.toObject(UsuarioDto::class.java)
+                ?: return Response.Failure(Exception("Usuario no encontrado en Firestore"))
+            val usuarioDom = dto.toDomain()
+            Response.Success(usuarioDom)
+        } catch (e: Exception) {
+            Response.Failure(e)
+        }
+    }
+>>>>>>> c40b17f (Proyecto Entrega)
+
+    override suspend fun recuperarPassword() {
         TODO("Not yet implemented")
     }
-
 }
+
+
+
+
+

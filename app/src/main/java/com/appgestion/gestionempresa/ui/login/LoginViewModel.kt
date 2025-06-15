@@ -3,7 +3,7 @@ package com.appgestion.gestionempresa.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appgestion.gestionempresa.data.model.Response
-import com.appgestion.gestionempresa.data.model.Usuarios
+import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,41 +19,56 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState
 
+<<<<<<< HEAD
     private val _user = MutableStateFlow<Usuarios?>(null)
     val user: StateFlow<Usuarios?> = _user
+=======
+    private val _user = MutableStateFlow<UsuarioEntity?>(null)
+    val user: StateFlow<UsuarioEntity?> = _user
+>>>>>>> c40b17f (Proyecto Entrega)
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    //resetear valor
     fun emailChange(newEmail: String) {
-        _uiState.value = uiState.value.copy(
-            email = newEmail
-        )
+        _uiState.value = uiState.value.copy(email = newEmail)
+        _error.value = null // Limpiar error al modificar texto
     }
 
-    //resetear valor
     fun passChange(newPass: String) {
-        _uiState.value = uiState.value.copy(
-            password = newPass
-        )
+        _uiState.value = uiState.value.copy(password = newPass)
+        _error.value = null // Limpiar error
     }
 
     fun login() {
-        // 1) Extraemos explícitamente email y password
-        val email = _uiState.value.email
-        val password = _uiState.value.password
+        val email = _uiState.value.email.trim()
+        val password = _uiState.value.password.trim()
+
+        if (email.isBlank() || password.isBlank()) {
+            _error.value = "Email y contraseña son obligatorios"
+            return
+        }
 
         viewModelScope.launch {
-            // 2) Primera llamada: obtenemos el UID
             when (val loginResp = authRepository.loginUser(email, password)) {
+<<<<<<< HEAD
                 is Response.Success -> {
                     _user.value = loginResp.data   // aquí tienes el String con el UID
                 }
                     is Response.Failure -> {
                         _error.value = loginResp.exception.message
                     }
+=======
+                is Response.Failure -> {
+                    // Error en Firebase Auth o en la lectura del usuario
+                    _error.value = loginResp.exception.message ?: "Error al iniciar sesión"
                 }
+                is Response.Success -> {
+                    // loginResp.data es ya un UsuarioEntity completo
+                    _user.value = loginResp.data
+>>>>>>> c40b17f (Proyecto Entrega)
+                }
+                is Response.Loading -> Response.Failure(Exception("Operación no válida en estado Loading"))
             }
         }
     }

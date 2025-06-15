@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.appgestion.gestionempresa.data.model.Response
+import com.appgestion.gestionempresa.domain.model.Role
+import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.repository.AuthRepository
 import com.appgestion.gestionempresa.navigation.AppScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -104,23 +106,38 @@ class RegistroTrabajadorViewModel @Inject constructor(
     }
 
      fun registrarTrabajador() {
+         val state = uiState.value
+
+         // (aquí irían validaciones: email/pasword/phone no vacíos, passwords coinciden, etc.)
+         if (state.email.isBlank() || state.password.isBlank() || state.name.isBlank() || state.phone.isBlank()) {
+             // actualizar el estado de error en _uiState
+             return
+         }
+
+         // Construimos la entidad de dominio:
+         val usuarioDom = UsuarioEntity(
+             id = "",  // el repositorio la sobreescribirá con el UID real
+             email = state.email,
+             rol = Role.TRABAJADOR,
+             nombre = state.name,
+             telefono = state.phone
+         )
+
          viewModelScope.launch {
-        val st = uiState.value
-        val tipe = "trabajador"
+             when (val respuesta = authRepository.registerUser(usuarioDom, state.password)) {
+                 is Response.Success -> {
+                     _registroSuccess.value = true
+                 }
 
-            when(authRepository.registerUser(st.email, st.password, tipe, st.name, st.phone)){
-                is Response.Success -> {
-                    _registroSuccess.value = true
-                    Log.d("Registro", "Registro en succes Registro ")
+                 is Response.Failure -> {
+                     // Propaga el error al UI (por ejemplo, guardándolo en otro StateFlow)
+                 }
+                 is Response.Loading -> Response.Failure(Exception("Operación no válida en estado Loading"))
 
-                }
-                is Response.Failure -> {
-                    Log.d("Registro", "Fallo Registro ")
+             }
+         }
+     }
 
-                }
-            }
-        }
-    }
 
     fun resetSuccess() {
         _registroSuccess.value = false
