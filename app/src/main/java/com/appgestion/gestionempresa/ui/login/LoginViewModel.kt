@@ -19,13 +19,8 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState
 
-<<<<<<< HEAD
-    private val _user = MutableStateFlow<Usuarios?>(null)
-    val user: StateFlow<Usuarios?> = _user
-=======
     private val _user = MutableStateFlow<UsuarioEntity?>(null)
     val user: StateFlow<UsuarioEntity?> = _user
->>>>>>> c40b17f (Proyecto Entrega)
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
@@ -51,14 +46,6 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
             when (val loginResp = authRepository.loginUser(email, password)) {
-<<<<<<< HEAD
-                is Response.Success -> {
-                    _user.value = loginResp.data   // aquí tienes el String con el UID
-                }
-                    is Response.Failure -> {
-                        _error.value = loginResp.exception.message
-                    }
-=======
                 is Response.Failure -> {
                     // Error en Firebase Auth o en la lectura del usuario
                     _error.value = loginResp.exception.message ?: "Error al iniciar sesión"
@@ -66,12 +53,13 @@ class LoginViewModel @Inject constructor(
                 is Response.Success -> {
                     // loginResp.data es ya un UsuarioEntity completo
                     _user.value = loginResp.data
->>>>>>> c40b17f (Proyecto Entrega)
                 }
                 is Response.Loading -> Response.Failure(Exception("Operación no válida en estado Loading"))
             }
         }
     }
+}
+
 
 
 

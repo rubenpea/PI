@@ -22,9 +22,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.appgestion.gestionempresa.ui.login.LoginScreen
 import androidx.navigation.compose.composable
-
-import com.appgestion.gestionempresa.ui.perfiles.empresa.HomeEmpresaScreen
-
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.appgestion.gestionempresa.domain.model.Role
@@ -72,26 +69,6 @@ fun AppNavigation() {
 
     val navBack by navController.currentBackStackEntryAsState()
     val currentRoute = navBack?.destination?.route
-
-
-    NavHost(navController = navController, startDestination = AppScreen.LoginScreen.route) {
-        composable(route = AppScreen.LoginScreen.route) {
-            LoginScreen(navController = navController, viewModel = hiltViewModel())
-        }
-        composable(route = AppScreen.RegistroEmpresaScreen.route) {
-            RegistroEmpresaScreen(navController = navController, viewModel = hiltViewModel())
-        }
-        composable(route = AppScreen.RegistroTrabajadorScreen.route) {
-            RegistroTrabajadorScreen(navController = navController, viewModel = hiltViewModel())
-        }
-        composable(route = AppScreen.RecupararScreen.route) {
-            RecuperarScreen(viewModel = hiltViewModel())
-        }
-        composable(route = AppScreen.HomeEmpresa.route) {
-            HomeEmpresaScreen(navController)
-        }
-        composable(route = AppScreen.HomeTrabajador.route) {
-            HomeScreenTrabajador(navController)
 
             // Carga rol si ya está logueado
             LaunchedEffect(isLoggedIn) {
@@ -382,5 +359,4 @@ fun AppNavigation() {
                 }
             }
         }
-    }
-}
+

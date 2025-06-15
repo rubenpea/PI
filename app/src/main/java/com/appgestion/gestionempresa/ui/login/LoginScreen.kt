@@ -41,21 +41,12 @@ fun LoginScreen(
     val usuario     by viewModel.user.collectAsState()
     val errorMessage by viewModel.error.collectAsState()
 
-<<<<<<< HEAD
-    val state by viewModel.uiState.collectAsState()
 
-    val error by viewModel.error.collectAsState()
-
-    val user  by viewModel.user.collectAsState(initial = null)
-    LaunchedEffect(user) {
-        user?.let {
-            val ruta = if (it.tipo == "empresa")
-=======
     // Navegación tras login exitoso
     LaunchedEffect(usuario) {
         usuario?.let { user ->
             val ruta = if (user.rol == Role.EMPRESA)
->>>>>>> c40b17f (Proyecto Entrega)
+
                 AppScreen.HomeEmpresa.route
             else
                 AppScreen.HomeTrabajador.route
