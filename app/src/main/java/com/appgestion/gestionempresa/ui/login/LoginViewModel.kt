@@ -45,16 +45,31 @@ class LoginViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
-            when (val loginResp = authRepository.loginUser(email, password)) {
+            when (val resp = authRepository.loginUser(email, password)) {
                 is Response.Failure -> {
-                    // Error en Firebase Auth o en la lectura del usuario
-                    _error.value = loginResp.exception.message ?: "Error al iniciar sesión"
+                    val ex = resp.exception
+                    _error.value = when (ex) {
+                        is com.google.firebase.auth.FirebaseAuthInvalidUserException ->
+                            "No existe ningún usuario con este email"
+
+                        is com.google.firebase.auth.FirebaseAuthInvalidCredentialsException ->
+                            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                                "Formato de email no válido"
+                            else
+                                "Contraseña incorrecta"
+
+                        else ->
+                            "Error al iniciar sesión: ${ex.localizedMessage ?: "desconocido"}"
+                    }
                 }
+
                 is Response.Success -> {
-                    // loginResp.data es ya un UsuarioEntity completo
-                    _user.value = loginResp.data
+                    _user.value = resp.data
                 }
-                is Response.Loading -> Response.Failure(Exception("Operación no válida en estado Loading"))
+
+                is Response.Loading -> {
+                    _error.value = "Operación no válida en estado Loading"
+                }
             }
         }
     }
