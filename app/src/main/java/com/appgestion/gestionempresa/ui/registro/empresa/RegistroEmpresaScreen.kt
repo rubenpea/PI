@@ -121,7 +121,7 @@ fun RegistroEmpresaScreen(
                 value       = state.name,
                 onValue     = viewModel::changeName,
                 label       = "Nombre",
-                placeholder = "Nombre de la empresa",
+                placeholder = "Nombre",
                 errorText   = state.nameError
             )
 
