@@ -1,34 +1,84 @@
-# Gestión de Empresa - Proyecto TFG
+# Gestión de Empresa – Proyecto Integrado
 
-Aplicación Android desarrollada en **Kotlin** con **Jetpack Compose**, que permite gestionar la relación entre empresas y trabajadores. Proyecto para el Trabajo de Fin de Grado.
+Aplicación Android multiplataforma para la gestión integral de la relación empresa–trabajador, desarrollada en **Kotlin** con **Jetpack Compose**. Proyecto Integrado (PI).
 
-## Funcionalidades actuales
+---
 
-- Pantalla de login con Firebase Auth
-- Pantalla de registro con tipo de usuario (empresa o trabajador)
-- Navegación Compose entre pantallas
-- Conexión con Firebase para autenticación
+## 📱 Características principales
 
-##  Tecnologías usadas
+- **Autenticación y registro**  
+  - Login / registro con **Firebase Auth** (correo + contraseña).  
+  - Diferenciación de roles: **Empresa** y **Trabajador**.
 
-- Kotlin + Jetpack Compose
-- Firebase Auth
-- Navigation Compose
-- Git + GitHub (control de versiones)
-- Android Studio
+- **Flujo Empresa**  
+  - Perfil de empresa: datos básicos, listado de trabajadores vinculados.  
+  - Gestión de ofertas: crear, editar, eliminar y ver candidaturas.  
+  - Gestión de tareas: asignar tareas a trabajadores, estado (pendiente/completada).  
+  - Gestión de vacaciones: aprobar/rechazar solicitudes de días libres.  
+  - Gestión de facturas: subir imágenes de facturas y ver histórico.
 
-##  Próximas funciones
+- **Flujo Trabajador**  
+  - Perfil de trabajador: datos personales, CV editable.  
+  - Visualización de ofertas disponibles y detalle completo (descripción, salario, requisitos).  
+  - Inscripción a ofertas (solicitud de candidatura).  
+  - Fichaje de jornada: inicio/fin de sesión con resumen diario/semanal.  
+  - Solicitud de vacaciones con selector de rango de fechas.  
+  - Visualización de tareas asignadas.
 
-- Guardado de datos del usuario en Firestore
-- Diferenciación de vistas según tipo de cuenta
-- Gestión de CV y ofertas de empleo
-- Módulo web complementario
+- **Arquitectura y calidad**  
+  - **MVVM** + **Use Cases** + repositorios.  
+  - **Inyección de dependencias** con Hilt.  
+  - **Kotlin Coroutines** y **StateFlow** para asincronía y estados reactivos.  
+  - UI con **Material3**, componentes adaptativos y accesibilidad.  
+  - Control de versiones en **Git** y despliegue en **GitHub**.
 
-##  Estructura general
+---
 
-  /app └── ui/ ├── login/ ├── register/ └── navigation/ └── viewmodel/ └── repository/
+## 🛠️ Tecnologías y librerías
 
-##  Autor
-tmF6ZkAlommfV
-**Rubén Pérez**  
-Estudiante de Desarrollador Aplicaciones Multiplataforma – PI 2024-2025
+- **Lenguaje**: Kotlin 1.9  
+- **UI**: Jetpack Compose (Material3, Navigation-Compose)  
+- **Backend**: Firebase (Auth, Firestore, Storage)  
+- **DI**: Hilt  
+- **Arquitectura**: MVVM + Clean Architecture (Data / Domain / UI)  
+- **Navegación**: Navigation Compose  
+- **Persistencia**: Firestore + Firebase Storage  
+- **Asincronía**: Coroutines + StateFlow  
+- **Versionado**: Git + GitHub  
+- **Build**: Gradle Kotlin DSL  
+
+---
+
+## 📂 Estructura del proyecto
+
+/app
+├─ data
+│ ├─ model # DTOs / Entities
+│ ├─ repository # Implementaciones de repositorio (Auth, Oferta, Tarea…)
+├─ domain
+│ ├─ model # Entidades de negocio
+│ ├─ repository # Interfaces de repositorio
+│ └─ usecase # Casos de uso
+├─ ui
+│ ├─ components # Composables reutilizables
+│ ├─ navigation # AppScaffold, NavGraph
+│ └─ perfiles
+│ ├─ empresa
+│ └─ trabajador
+└─ MainActivity.kt
+
+📅 Próximas mejoras
+Aumentar la cobertura de tests (unitarios e instrumentados).
+
+Actualizar modulo facturas con OCR para lectura de facturas.
+
+Push notifications para eventos (nuevas candidaturas, aprobaciones…).
+
+Panel web complementario para gestión desde navegador.
+
+Optimización de rendimiento y caching local (Room / DataStore).
+
+🧑‍💻 Autor
+Rubén Pérez Arias
+Estudiante de Desarrollo de Aplicaciones Multiplataforma.
+Grado Superior (PI – curso 2024-2025)
