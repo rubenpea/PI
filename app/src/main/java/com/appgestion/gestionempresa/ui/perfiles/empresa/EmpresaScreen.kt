@@ -109,19 +109,22 @@ fun EmpresaScreen(
                 if (ownerEmail.isNotBlank()) {
                     ownerName?.let {
                         Text(
-                            "Propietario"+it,
+                            "Propietario: "+it,
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
                     Text(
-                        "Email"+ownerEmail,
+                        "Email: "+ownerEmail,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
                 Spacer(Modifier.height(12.dp))
-
+                Text("Descripcion:",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
                 Text(
                     uiStateEmpresa.empresa?.descripcion.orEmpty(),
                     style = MaterialTheme.typography.bodyMedium

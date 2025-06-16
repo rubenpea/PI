@@ -1,6 +1,5 @@
 package com.appgestion.gestionempresa.navigation
 
-import com.appgestion.gestionempresa.ui.perfiles.empresa.ProfileScreen
 
 sealed class AppScreen(val route: String, val title: String, val showBottomBar: Boolean = true) {
 
@@ -20,6 +19,7 @@ sealed class AppScreen(val route: String, val title: String, val showBottomBar: 
     object HomeTrabajador : AppScreen("hom_trabajador", "Inicio")
 
     object HomeEmpresa : AppScreen("hom_empresa", "Inicio", showBottomBar = true)
+
     object Profile           : AppScreen("profile",       "Perfil", false)
 
     object OfertaScreen : AppScreen(
@@ -68,7 +68,6 @@ sealed class AppScreen(val route: String, val title: String, val showBottomBar: 
     }
 
 
-    //rutas Usuario Rol Trabajador.
     object TareasTrabajadorScreen : AppScreen("tarea_trabajador_screen", "Mis Tareas")
 
     object OfertasDisponiblesScreen : AppScreen(
@@ -105,7 +104,6 @@ sealed class AppScreen(val route: String, val title: String, val showBottomBar: 
     object EmpresaTrabajadoresScreen : AppScreen("lista_trabajadores", "Trabajadores", true)
 
 
-
     companion object {
         /** listado con todas las pantallas para facilitar búsquedas dinámicas */
         val all = listOf(
@@ -114,17 +112,12 @@ sealed class AppScreen(val route: String, val title: String, val showBottomBar: 
             SetupEmpresaScreen,
             RegistroTrabajadorScreen,
             RecupararScreen,
-
             HomeTrabajador,
-
-
             EmpresaTrabajadoresScreen,
             MisOfertasEmpresaScreen,
             CvDetailScreen,
-
             FacturaUploadScreenNav,
             FacturaListScreenNav,
-
             HomeEmpresa,
             Profile,
             OfertaScreen,
@@ -134,7 +127,6 @@ sealed class AppScreen(val route: String, val title: String, val showBottomBar: 
             TareasEmpresaScreen,
             VacacionesEmpresaScreen,
             CandidaturasOfertaScreen,
-
             HomeTrabajador,
             OfertasTrabajadorScreen,
             OfertaDetailScreen,

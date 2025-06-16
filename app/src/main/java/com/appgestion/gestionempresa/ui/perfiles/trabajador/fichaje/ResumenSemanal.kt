@@ -31,7 +31,6 @@ fun ResumenSemanalScreen(viewModel: FichajeViewModel = hiltViewModel()) {
         if (uid.isNotEmpty()) viewModel.cargarHistorial(uid)
     }
 
-    // Cálculo de horas totales de la semana (en horas, con decimales)
     val totalHorasSemana: Float = viewModel.calcularHorasSemanaActual()
 
     Column(
@@ -41,14 +40,12 @@ fun ResumenSemanalScreen(viewModel: FichajeViewModel = hiltViewModel()) {
     ) {
         Spacer(Modifier.height(Dimens.smallPadding))
 
-        // Título
         Text(
             text = "Resumen Semanal",
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(Modifier.height(Dimens.padding))
 
-        // Card con total de horas
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -78,14 +75,12 @@ fun ResumenSemanalScreen(viewModel: FichajeViewModel = hiltViewModel()) {
 
         Spacer(Modifier.height(Dimens.padding))
 
-        // Subtítulo detalle diario
         Text(
             text = "Detalle diario",
             style = MaterialTheme.typography.titleMedium
         )
         Spacer(Modifier.height(Dimens.smallPadding))
 
-        // Listado de días
         when (historial) {
             is Response.Loading -> Box(
                 Modifier.fillMaxWidth(),
@@ -94,7 +89,6 @@ fun ResumenSemanalScreen(viewModel: FichajeViewModel = hiltViewModel()) {
                 CircularProgressIndicator()
             }
             is Response.Success -> {
-                // Agrupamos por fecha
                 val dias: List<Pair<String, List<FichajeEntity>>> =
                     (historial as Response.Success).data
                         .filter { it.duracion != null }
@@ -127,13 +121,11 @@ private fun DailySummaryCard(
     fecha: String,
     registros: List<FichajeEntity>
 ) {
-    // Formateamos la fecha
     val sdfIn = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) }
     val sdfOut = remember { SimpleDateFormat("dd MMM yyyy", Locale.getDefault()) }
     val date = runCatching { sdfIn.parse(fecha) }.getOrNull() ?: Date()
     val fechaFormateada = sdfOut.format(date)
 
-    // Total horas de ese día
     val horasDia = registros
         .map { it.duracion!!.toFloat() / 1000f / 60f / 60f }
         .sum()

@@ -5,11 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.CurriculumEntity
 import com.appgestion.gestionempresa.domain.usecase.trabajador.GetCVByIdUseCase
-import com.appgestion.gestionempresa.domain.usecase.trabajador.GetMyCVsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

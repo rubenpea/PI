@@ -87,17 +87,14 @@ fun VacacionesSolicitadasScreen(
 
 @Composable
 private fun VacacionRequestCard(req: VacacionesEntity) {
-    // Formateadores de fecha
     val inFmt  = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) }
     val outFmt = remember { SimpleDateFormat("dd MMM yyyy", Locale.getDefault()) }
 
-    // Parseo seguro
     val startDate = runCatching { Date(inFmt.parse(req.startDate.toString())!!.time) }
         .getOrNull() ?: Date()
     val endDate   = runCatching { Date(inFmt.parse(req.endDate.toString())!!.time) }
         .getOrNull() ?: startDate
 
-    // Texto de rango
     val rangeText = "${outFmt.format(startDate)} → ${outFmt.format(endDate)}"
 
     Card(
@@ -108,7 +105,6 @@ private fun VacacionRequestCard(req: VacacionesEntity) {
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(modifier = Modifier.padding(Dimens.padding)) {
-            // Rango de fechas
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.DateRange, contentDescription = null)
                 Spacer(Modifier.width(Dimens.smallPadding))
@@ -120,7 +116,6 @@ private fun VacacionRequestCard(req: VacacionesEntity) {
 
             Spacer(Modifier.height(Dimens.smallPadding))
 
-            // Días y estado
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.CalendarToday, contentDescription = null)
                 Spacer(Modifier.width(Dimens.smallPadding))

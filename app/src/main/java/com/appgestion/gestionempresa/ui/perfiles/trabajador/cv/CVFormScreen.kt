@@ -1,9 +1,7 @@
 package com.appgestion.gestionempresa.ui.perfiles.trabajador.cv
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -39,12 +37,10 @@ fun CVFormScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            // aquí: habilitamos scroll vertical cuando haga falta
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // — Icono y título —
         Icon(
             painter           = painterResource(R.drawable.logo),
             contentDescription= "Logo Gestión",
@@ -94,11 +90,10 @@ fun CVFormScreen(
             errorText   = state.skillsError
         )
 
-        // — Botón de guardado —
         Button(
             onClick  = {
                 viewModel.createCV()
-                navController.popBackStack() // volvemos atrás
+                navController.popBackStack()
             },
             modifier = Modifier
                 .fillMaxWidth()

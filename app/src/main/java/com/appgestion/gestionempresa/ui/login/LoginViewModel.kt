@@ -27,7 +27,7 @@ class LoginViewModel @Inject constructor(
 
     fun emailChange(newEmail: String) {
         _uiState.value = uiState.value.copy(email = newEmail)
-        _error.value = null // Limpiar error al modificar texto
+        _error.value = null
     }
 
     fun passChange(newPass: String) {

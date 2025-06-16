@@ -1,8 +1,6 @@
 package com.appgestion.gestionempresa.domain.repository
 
 import com.appgestion.gestionempresa.domain.model.EstadoTarea
-
-
 import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.TareaEntity
 

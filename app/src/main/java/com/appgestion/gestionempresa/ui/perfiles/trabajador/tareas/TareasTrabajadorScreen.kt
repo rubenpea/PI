@@ -44,7 +44,6 @@ fun TareasTrabajadorScreen(
 ) {
     val tareaState by viewModel.tareas.collectAsState()
 
-    // Control para el diálogo de detalle
     var showDialog by remember { mutableStateOf(false) }
     var tareaSeleccionada by remember { mutableStateOf<TareaEntity?>(null) }
 
@@ -103,7 +102,6 @@ fun TareasTrabajadorScreen(
         }
     }
 
-    // Diálogo de detalle
     if (showDialog && tareaSeleccionada != null) {
         AlertDialog(
             onDismissRequest = { showDialog = false },

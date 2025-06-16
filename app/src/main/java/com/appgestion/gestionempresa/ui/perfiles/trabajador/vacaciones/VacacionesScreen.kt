@@ -58,7 +58,6 @@ fun VacacionesScreen(
             ?.let { vacacionesSolicitadasViewModel.loadRequests(it) }
     }
 
-    // Manejamos loading del historial
     if (histoState.response is Response.Loading) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
@@ -66,7 +65,6 @@ fun VacacionesScreen(
         return
     }
 
-    // ¿Alguna petición pendiente?
     val pendientes = (histoState.response as? Response.Success<List<VacacionesEntity>>)
         ?.data
         ?.any { it.status == "PENDIENTE" } == true
@@ -79,7 +77,6 @@ fun VacacionesScreen(
         Spacer(Modifier.height(Dimens.smallPadding))
 
         if (pendientes) {
-            // Aviso de petición pendiente
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = MaterialTheme.shapes.medium,
@@ -101,7 +98,6 @@ fun VacacionesScreen(
             }
 
         } else {
-            // Selector de rango
             var openDialog by remember { mutableStateOf(false) }
             val dateState = rememberDateRangePickerState()
 
@@ -133,7 +129,6 @@ fun VacacionesScreen(
                 }
             }
 
-            // Muestra resumen una vez elegidas fechas
             formState.startDate?.let { startMillis ->
                 val sdf = remember { SimpleDateFormat("dd MMM yyyy", Locale.getDefault()) }
                 val startDate = Date(startMillis)

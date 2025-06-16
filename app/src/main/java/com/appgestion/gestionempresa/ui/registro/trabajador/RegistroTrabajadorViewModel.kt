@@ -1,15 +1,11 @@
 package com.appgestion.gestionempresa.ui.registro.trabajador
 
-import android.util.Log
-import androidx.compose.material3.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.Role
 import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.repository.AuthRepository
-import com.appgestion.gestionempresa.navigation.AppScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

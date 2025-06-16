@@ -1,6 +1,7 @@
 package com.appgestion.gestionempresa.navigation
 
 import FichajeScreen
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
@@ -59,6 +60,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
+@SuppressLint("SuspiciousIndentation")
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation() {
@@ -104,9 +106,7 @@ fun AppNavigation() {
                     }
                     if (currentRoute == AppScreen.HomeTrabajador.route) {
                         IconButton(onClick = {
-                            // 1️⃣ cerrar sesión
                             FirebaseAuth.getInstance().signOut()
-                            // 2️⃣ limpiar backstack y navegar al login
                             navController.navigate(AppScreen.LoginScreen.route) {
                                 popUpTo(navController.graph.startDestinationId) { inclusive = true }
                             }
@@ -200,7 +200,6 @@ fun AppNavigation() {
                     }
 
 
-// 2.2 — La pantalla de listado “Mis Ofertas” de la misma empresa
                     composable(
                         route = AppScreen.MisOfertasEmpresaScreen.route,
                         arguments = listOf(navArgument("empresaId") {
@@ -222,7 +221,7 @@ fun AppNavigation() {
                         )
                     }
                     composable(
-                        route = AppScreen.CandidaturasOfertaScreen.route,          // "candidaturas/{ofertaId}"
+                        route = AppScreen.CandidaturasOfertaScreen.route,
                         arguments = listOf(navArgument("ofertaId") { type = NavType.StringType })
                     ) { back ->
                         val ofertaId = back.arguments!!.getString("ofertaId")!!
@@ -261,7 +260,6 @@ fun AppNavigation() {
                         )
                     }
 
-                    // 2) Subida de factura
                     composable(
                         route = AppScreen.FacturaUploadScreenNav.route,
                         arguments = listOf(navArgument("idEmpresa") {
@@ -280,9 +278,9 @@ fun AppNavigation() {
                         val empresaId = backStackEntry.arguments!!.getString("idEmpresa")!!
                         AsignarTareaScreen(
                             empresaId = empresaId,
-                            navController = navController,              // <-- aquí
-                            empresaViewModel = hiltViewModel(),         // opcional, si usas hiltViewModel()
-                            tareaViewModel = hiltViewModel()          // opcional
+                            navController = navController,
+                            empresaViewModel = hiltViewModel(),
+                            tareaViewModel = hiltViewModel()
                         )
                     }
                     composable(
@@ -322,7 +320,7 @@ fun AppNavigation() {
                     ) { back ->
                         OfferDetailScreen(
                             ofertaId = back.arguments!!.getString("ofertaId")!!,
-                            navController = navController
+                            navController = navController,
                         )
                     }
                     composable(AppScreen.CVFormScreen.route) {
@@ -330,6 +328,7 @@ fun AppNavigation() {
                     }
                     composable(AppScreen.MisCandidaturasScreen.route) {
                         CandidaturasTrabajadorScreen(
+
                             viewModel = hiltViewModel(),
                             navController = navController
                         )

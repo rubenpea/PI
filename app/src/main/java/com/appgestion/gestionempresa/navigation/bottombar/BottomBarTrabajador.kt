@@ -17,7 +17,7 @@ fun BottomBarTrabajador(navController: NavController) {
         TrabajadorBottomItem.Vacaciones,
         TrabajadorBottomItem.Fichaje,
         TrabajadorBottomItem.Ofertas,
-        TrabajadorBottomItem.Candidaturas   // ← Nueva línea
+        TrabajadorBottomItem.Candidaturas
     )
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry?.destination?.route

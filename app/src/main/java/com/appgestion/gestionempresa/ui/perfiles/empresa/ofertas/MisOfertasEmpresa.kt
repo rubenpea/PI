@@ -1,14 +1,11 @@
 package com.appgestion.gestionempresa.ui.perfiles.empresa.ofertas
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -24,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.navigation.AppScreen
-import com.appgestion.gestionempresa.ui.components.OfertaCard
 
 @Composable
 fun MisOfertasScreen(

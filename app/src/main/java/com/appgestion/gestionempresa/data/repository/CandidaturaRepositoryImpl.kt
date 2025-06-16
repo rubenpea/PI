@@ -3,7 +3,6 @@ package com.appgestion.gestionempresa.data.repository
 import com.appgestion.gestionempresa.data.model.CandidaturaDto
 import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.data.model.toDomain
-import com.appgestion.gestionempresa.domain.model.CurriculumEntity
 import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.repository.CandidaturaRepository
 import com.google.firebase.firestore.FirebaseFirestore

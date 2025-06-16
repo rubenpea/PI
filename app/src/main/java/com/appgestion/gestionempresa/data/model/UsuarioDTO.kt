@@ -1,8 +1,5 @@
 package com.appgestion.gestionempresa.data.model
 
-
-// file: data/model/UsuarioDto.kt
-
 import com.appgestion.gestionempresa.domain.model.Role
 import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.google.firebase.firestore.DocumentId
@@ -27,8 +24,6 @@ data class UsuarioDto(
     @PropertyName("empresaId")
     val empresaId: String? = null,
 
-    // Observación: normalmente no conviene guardar contraseñas en texto plano en Firestore.
-    // Firebase Auth las guarda por separado. Si no las guardas en Firestore, quita este campo.
     @PropertyName("password")
     val password: String = ""
 )
@@ -49,10 +44,6 @@ fun UsuarioDto.toDomain(): UsuarioEntity {
     )
 }
 
-/**
- * Convierte de entidad de dominio a DTO (para guardar en Firestore).
- * Si no guardas la contraseña en Firestore, omítelo o pásalo como cadena vacía.
- */
 fun UsuarioEntity.toDto(passwordEnTexto: String = ""): UsuarioDto {
     val tipoStr = when (this.rol) {
         Role.EMPRESA    -> "empresa"

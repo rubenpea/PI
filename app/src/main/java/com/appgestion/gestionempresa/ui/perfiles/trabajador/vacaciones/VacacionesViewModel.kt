@@ -2,10 +2,8 @@ package com.appgestion.gestionempresa.ui.perfiles.trabajador.vacaciones
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.VacacionesEntity
 import com.appgestion.gestionempresa.domain.usecase.trabajador.SubmitVacacionesUseCase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +30,6 @@ class VacacionesViewModel @Inject constructor(
 
     fun submit(workerId: String) = viewModelScope.launch {
         try {
-            // 1) Obtén la empresaId real del trabajador
             val snap = firestore
                 .collection("usuarios")
                 .document(workerId)
@@ -41,23 +38,19 @@ class VacacionesViewModel @Inject constructor(
             val empresaId = snap.getString("empresaId")
                 ?: throw IllegalStateException("Este trabajador no está en ninguna empresa")
 
-            // 2) Crea la petición con el campo empresaId correcto
             val s = state.value
             val req = VacacionesEntity(
                 id        = "",
                 workerId  = workerId,
-                empresaId = empresaId,          // ← **UID de la empresa**, no del trabajador
+                empresaId = empresaId,
                 startDate = s.startDate!!,
                 endDate   = s.endDate!!,
                 days      = s.days
             )
 
-            // 3) Envía
             submitUseCase(req)
-            // aquí notificar éxito/error al usuario…
 
         } catch (e: Exception) {
-            // manejar error (por ejemplo, toast)
         }
     }
 }

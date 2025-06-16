@@ -1,6 +1,5 @@
 package com.appgestion.gestionempresa.ui.perfiles.empresa.vacaciones
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appgestion.gestionempresa.data.model.Response

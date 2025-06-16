@@ -50,7 +50,6 @@ fun FacturasScreen(
         uri?.let { viewModel.subirFactura(it, idEmpresa) }
     }
 
-    // 2) Carga inicial de la lista
     LaunchedEffect(idEmpresa) {
         viewModel.cargarFacturas(idEmpresa)
     }

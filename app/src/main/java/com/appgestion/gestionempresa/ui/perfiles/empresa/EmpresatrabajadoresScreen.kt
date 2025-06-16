@@ -57,7 +57,6 @@ fun EmpresaTrabajadoresScreen(
     ) {
         Text("Gestionar Trabajadores", style = MaterialTheme.typography.headlineSmall)
 
-        // — Añadir —
         AppCard(modifier = Modifier.fillMaxWidth()) {
             var correo by rememberSaveable { mutableStateOf("") }
             Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {

@@ -53,7 +53,6 @@ import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.TareaEntity
 import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.ui.perfiles.empresa.EmpresaViewModel
-
 import androidx.compose.material3.*
 
 @Composable
@@ -149,7 +148,6 @@ fun AsignarTareaScreen(
                                     ?.nombre
                                     ?: tarea.trabajadorId.take(6) + "…"
 
-                                // Tarjeta expandible
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -210,7 +208,6 @@ fun AsignarTareaScreen(
             }
         }
 
-        // — FAB para crear nueva tarea —
         FloatingActionButton(
             onClick = {
                 nuevoTitulo = ""
@@ -225,7 +222,6 @@ fun AsignarTareaScreen(
             Icon(Icons.Default.Add, contentDescription = "Crear Tarea")
         }
 
-        // — Diálogo para nueva tarea —
         if (showCreateDialog) {
             Dialog(onDismissRequest = { showCreateDialog = false }) {
                 Surface(shape = RoundedCornerShape(8.dp)) {

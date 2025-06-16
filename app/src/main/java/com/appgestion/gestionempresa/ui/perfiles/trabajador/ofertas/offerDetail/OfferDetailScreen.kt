@@ -78,7 +78,6 @@ fun OfferDetailScreen(
 
                     Spacer(Modifier.weight(1f))
 
-                    // Botón Inscribirse
                     Button(
                         onClick = {
                             cvVM.loadMyCVs(workerId)
@@ -92,7 +91,6 @@ fun OfferDetailScreen(
             }
         }
 
-        // Dialog de selección de CV / confirmación
         if (showDialog) {
             ApplyDialog(
                 workerId    = workerId,

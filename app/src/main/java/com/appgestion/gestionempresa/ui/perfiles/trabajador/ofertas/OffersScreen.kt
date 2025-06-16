@@ -1,17 +1,10 @@
 package com.appgestion.gestionempresa.ui.perfiles.trabajador.ofertas
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -22,19 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.appgestion.gestionempresa.domain.model.Role
 import com.appgestion.gestionempresa.data.model.Response
-import com.appgestion.gestionempresa.domain.model.OfertaEntity
 import com.appgestion.gestionempresa.navigation.AppScreen
-import com.appgestion.gestionempresa.ui.components.AppScaffold
-import com.appgestion.gestionempresa.ui.components.OfertaCard
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -68,7 +53,6 @@ fun OffersScreen(
             })
         )
 
-        // — Listdo —
         Box(Modifier.fillMaxSize()) {
             when (val resp = uiState.response) {
                 is Response.Loading -> {

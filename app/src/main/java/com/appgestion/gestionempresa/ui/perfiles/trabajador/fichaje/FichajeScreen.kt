@@ -28,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -64,7 +63,6 @@ fun FichajeScreen(
     ) {
         Spacer(Modifier.height(Dimens.smallPadding))
 
-        // Botón iniciar/finalizar
         Button(
             onClick = {
                 if (fichajeAbierto == null) viewModel.iniciarFichaje(uid)
@@ -82,7 +80,6 @@ fun FichajeScreen(
 
         Spacer(Modifier.height(Dimens.padding))
 
-        // Mensaje de resultado
         when (registro) {
             is Response.Loading -> CircularProgressIndicator()
             is Response.Success -> {
@@ -143,7 +140,6 @@ fun FichajeScreen(
 
         Spacer(Modifier.weight(1f))
 
-        // Botón resumen semanal
         Button(
             onClick = { navController.navigate(AppScreen.ResumenSemanalScreen.route) },
             modifier = Modifier
@@ -159,10 +155,13 @@ fun FichajeScreen(
 
 @Composable
 private fun FichajeRow(fichaje: FichajeEntity) {
-    val sdf = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
+    // Definimos formatters
+    val sdfIn  = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) }
+    val sdfOut = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
 
-    val epochMillis = fichaje.fecha.toLongOrNull() ?: 0L
-    val date = Date(epochMillis)
+    val date = runCatching { sdfIn.parse(fichaje.fecha) }
+        .getOrNull()
+        ?: Date() // fallback
 
     val horas = fichaje.duracion?.let { dur ->
         val totalHours = dur / 1000f / 60f / 60f
@@ -172,25 +171,25 @@ private fun FichajeRow(fichaje: FichajeEntity) {
     } ?: "--"
 
     Card(
-        modifier = Modifier
+        modifier  = Modifier
             .fillMaxWidth()
             .padding(horizontal = Dimens.padding),
-        shape = MaterialTheme.shapes.medium,
+        shape     = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
-            modifier = Modifier.padding(Dimens.padding),
-            verticalAlignment = Alignment.CenterVertically
+            modifier           = Modifier.padding(Dimens.padding),
+            verticalAlignment  = Alignment.CenterVertically
         ) {
             Icon(Icons.Default.CalendarToday, contentDescription = null)
             Spacer(Modifier.width(Dimens.smallPadding))
             Text(
-                text = sdf.format(date),
+                text  = sdfOut.format(date),
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = horas,
+                text  = horas,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

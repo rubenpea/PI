@@ -10,7 +10,6 @@ import com.appgestion.gestionempresa.data.model.Response
 import com.appgestion.gestionempresa.domain.model.CandidaturaEntity
 import com.appgestion.gestionempresa.navigation.AppScreen
 import com.google.firebase.auth.FirebaseAuth
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +20,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.appgestion.gestionempresa.data.model.OfertaDto
+import com.appgestion.gestionempresa.data.model.toDomain
+import com.appgestion.gestionempresa.domain.model.OfertaEntity
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,38 +45,34 @@ fun CandidaturasTrabajadorScreen(
         viewModel.loadCandidaturas(workerId)
     }
 
-        when (val resp = state.response) {
-            is Response.Loading -> {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+    when (val resp = state.response) {
+        is Response.Loading -> {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-            is Response.Failure -> {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("Error: ${resp.exception.localizedMessage}")
-                }
+        }
+        is Response.Failure -> {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text("Error: ${resp.exception.localizedMessage}")
             }
-            is Response.Success -> {
-                LazyColumn(
-                    Modifier
-                        .fillMaxSize()
-                        .padding(),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(vertical = 8.dp)
-                ) {
-                    items(resp.data, key = { it.id }) { cand ->
+        }
+        is Response.Success -> {
+            LazyColumn {
+                items(resp.data, key = { it.id }) { cand ->
+                    val ofertaState = produceState<OfertaEntity?>(initialValue = null, cand.ofertaId) {
+                        val snap = FirebaseFirestore.getInstance()
+                            .collection("ofertas")
+                            .document(cand.ofertaId)
+                            .get()
+                            .await()
+                        val dto = snap.toObject(OfertaDto::class.java)
+                        value = dto?.toDomain()
+                    }
+
+                    ofertaState.value?.let { oferta ->
                         CandidaturaRow(
-                            candidatura      = cand,
+                            candidatura     = cand,
+                            oferta          = oferta,
                             onClickViewOffer = {
                                 navController.navigate(
                                     AppScreen.OfertaDetailScreen.createRoute(cand.ofertaId)
@@ -83,14 +84,17 @@ fun CandidaturasTrabajadorScreen(
             }
         }
     }
+}
 
 
 @Composable
 fun CandidaturaRow(
     candidatura: CandidaturaEntity,
+    oferta: OfertaEntity,
     onClickViewOffer: () -> Unit
 ) {
     val sdf = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
+
 
     Card(
         onClick = onClickViewOffer,
@@ -102,7 +106,7 @@ fun CandidaturaRow(
     ) {
         Column(Modifier.padding(16.dp)) {
             Text(
-                text = "Oferta: ${candidatura.ofertaId}",
+                text = "Oferta: ${oferta.titulo}",
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(Modifier.height(8.dp))
@@ -111,7 +115,7 @@ fun CandidaturaRow(
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(Modifier.height(8.dp))
-            // Chip de estado
+
             val color = when (candidatura.status.uppercase()) {
                 "ACEPTADA"  -> MaterialTheme.colorScheme.primary
                 "RECHAZADA" -> MaterialTheme.colorScheme.error

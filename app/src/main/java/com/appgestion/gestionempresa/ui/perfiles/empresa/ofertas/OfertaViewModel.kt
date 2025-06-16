@@ -39,20 +39,15 @@ class OfertaViewModel @Inject constructor(
     fun onCaducidadChange(value: Long?) = _uiState.update { it.copy(fechaCaducidad = value) }
     fun onSalarioChange(value: Double)     = _uiState.update { it.copy(salario     = value) }
 
-    /** Carga la lista de ofertas de esta empresa */
     fun loadOfertas(empresaId: String) {
         viewModelScope.launch {
-            // indicamos loading
             _uiState.update { it.copy(ofertasResponse = Response.Loading) }
 
-            // pedimos al use case, que devuelve Response<List<OfertaEntity>>
             val res = getByEmpresaUseCase(empresaId)
-            // volcamos la respuesta (Success, Failure o Loading)
             _uiState.update { it.copy(ofertasResponse = res) }
         }
     }
 
-    /** Publica una nueva oferta y recarga el listado */
     fun publicarOferta(empresaId: String) {
         viewModelScope.launch {
             val oferta = OfertaEntity(
@@ -61,7 +56,7 @@ class OfertaViewModel @Inject constructor(
                 titulo           = uiState.value.titulo,
                 descripcion      = uiState.value.descripcion,
                 requisitos       = uiState.value.categoria ?: "",
-                salario          = 0.0,
+                salario          = uiState.value.salario,
                 fechaPublicacion = System.currentTimeMillis(),
                 fechaCaducidad   = uiState.value.fechaCaducidad
             )

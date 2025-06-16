@@ -68,7 +68,6 @@ class FichajeViewModel @Inject constructor(
         }
     }
 
-    // EXTRA: suma total semanal para resumen
     fun calcularHorasSemanaActual(): Float {
         val lista = (_historial.value as? Response.Success)?.data ?: return 0f
 

@@ -28,14 +28,13 @@ class CVFormViewModel @Inject constructor(
     private fun update(transform: (CVFormState) -> CVFormState) {
         _uiState.update { old ->
             val candidate = transform(old)
-            // 1) asigna cada error de validación
+
             val nameErr    = if (candidate.name.isBlank()) "Requerido" else null
             val emailErr   = if (!candidate.email.contains("@")) "Email inválido" else null
-            val phoneErr   = null // si no lo quieres obligatorio, déjalo así
-            val summaryErr = null // puedes validarlo si quieres mínimo X chars
+            val phoneErr   = null
+            val summaryErr = null
             val skillsErr  = if (candidate.skillsText.isBlank()) "Requerido" else null
 
-            // 2) recalcula isValid sólo si no hay errores
             val valid = listOf(nameErr, emailErr, phoneErr, summaryErr, skillsErr)
                 .all { it == null }
 

@@ -72,7 +72,6 @@ fun RegistroTrabajadorScreen(
             verticalArrangement   = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Logo arriba
             Image(
                 painter            = painterResource(R.drawable.logo),
                 contentDescription = "Logo Gestión",
@@ -86,7 +85,6 @@ fun RegistroTrabajadorScreen(
                 style = MaterialTheme.typography.titleMedium
             )
 
-            // Campos...
             FieldWithError(
                 value       = state.email,
                 onValue     = viewModel::changeEmail,
@@ -138,10 +136,9 @@ fun RegistroTrabajadorScreen(
         }
     }
 
-    // Diálogo tras éxito de registro
     if (showDialog) {
         AlertDialog(
-            onDismissRequest = { /* no cierra tocando fuera */ },
+            onDismissRequest = { },
             shape            = RoundedCornerShape(16.dp),
             icon             = {
                 Icon(

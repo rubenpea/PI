@@ -1,25 +1,20 @@
 package com.appgestion.gestionempresa.ui.perfiles.empresa.candidaturas
 
 import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appgestion.gestionempresa.data.model.Response
-import com.appgestion.gestionempresa.domain.model.CandidaturaEntity
 import com.appgestion.gestionempresa.domain.model.Role
 import com.appgestion.gestionempresa.domain.model.UsuarioEntity
 import com.appgestion.gestionempresa.domain.usecase.trabajador.GetCandidaturasPorOfertaUseCase
-import com.appgestion.gestionempresa.domain.usecase.trabajador.GetUsuarioByIdUseCase
 import com.appgestion.gestionempresa.domain.usecase.trabajador.UpdateCandidaturaStatusUseCase
 import com.appgestion.gestionempresa.domain.usecase.user.GetUserByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.flow.*
 
 
 

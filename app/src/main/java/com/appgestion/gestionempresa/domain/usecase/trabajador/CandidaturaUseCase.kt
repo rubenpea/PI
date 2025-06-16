@@ -15,7 +15,6 @@ class GetCandidaturasPorOfertaUseCase(private val repo: CandidaturaRepository) {
         repo.getCandidaturasByOferta(ofertaId)
 }
 
-// domain/usecase/empresa/UpdateCandidaturaStatusUseCase.kt
 class UpdateCandidaturaStatusUseCase(private val repo: CandidaturaRepository) {
     suspend operator fun invoke(id: String, nuevoStatus: String) =
         repo.updateStatus(id, nuevoStatus)

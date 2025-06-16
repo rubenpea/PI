@@ -30,9 +30,6 @@ class EmpresaViewModel @Inject constructor(
 
     val trabajadoresInfo = MutableStateFlow<List<UsuarioEntity>>(emptyList())
 
-    /**
-     * Crea o actualiza el perfil de la empresa.
-     */
     fun saveEmpresa(empresa: EmpresaEntity) {
         viewModelScope.launch {
             _uiState.value =

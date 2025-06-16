@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appgestion.gestionempresa.data.model.Response
-import com.appgestion.gestionempresa.domain.model.VacacionesEntity
 import com.appgestion.gestionempresa.ui.perfiles.empresa.EmpresaViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,7 +68,6 @@ fun VacacionesEmpresaScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    // Buscamos el nombre, o mostramos el ID si no lo encontramos
                                     val nombreTrabajador = trabajadores
                                         .firstOrNull { it.id == req.workerId }
                                         ?.nombre

@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,7 +36,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appgestion.gestionempresa.R
 import com.appgestion.gestionempresa.navigation.AppScreen
-import com.appgestion.gestionempresa.ui.components.PasswordField
 
 
 @Composable
@@ -48,7 +46,6 @@ fun RegistroEmpresaScreen(
     val state   by viewModel.uiState.collectAsState()
     val success by viewModel.registerUser.collectAsState()
 
-    // Navegar tras registro OK
     LaunchedEffect(success) {
         if (success) {
             navController.navigate(AppScreen.SetupEmpresaScreen.route) {
@@ -68,7 +65,6 @@ fun RegistroEmpresaScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // --- LOGO ARRIBA ---
             Image(
                 painter            = painterResource(R.drawable.logo),
                 contentDescription = "Logo Gestión",
@@ -91,12 +87,10 @@ fun RegistroEmpresaScreen(
                 errorText   = state.emailError
             )
 
-            // Password + validación en tiempo real
             FieldWithError(
                 value              = state.password,
                 onValue            = {
                     viewModel.changePass(it)
-                      // método en VM que actualiza passDiffError
                 },
                 label              = "Contraseña",
                 placeholder        = "••••••",
@@ -104,7 +98,6 @@ fun RegistroEmpresaScreen(
                 isPassword         = true
             )
 
-            // Confirmar password
             FieldWithError(
                 value              = state.passwordConfirm,
                 onValue            = {
@@ -189,7 +182,6 @@ private fun FieldWithError(
             )
         }
 
-        // Mensaje de error alineado a la izquierda
         errorText?.let {
             Text(
                 text = it,
